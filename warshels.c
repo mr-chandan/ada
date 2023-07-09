@@ -1,9 +1,5 @@
 #include <stdio.h>
-
-int min(int a, int b)
-{
-    return (a < b) ? a : b;
-}
+#include <stdbool.h>
 
 void main()
 {
@@ -11,7 +7,8 @@ void main()
     printf("Enter the number of nodes: ");
     scanf("%d", &size);
 
-    int cost[size][size];
+    bool cost[size][size];
+    printf("Enter the cost matrix:\n");
     for (int i = 0; i < size; i++)
     {
         for (int j = 0; j < size; j++)
@@ -36,7 +33,8 @@ void main()
         {
             for (int j = 0; j < size; j++)
             {
-                cost[i][j] = min(cost[i][j], cost[i][k] + cost[k][j]);
+                if (cost[i][j] != 0 || (cost[i][k] == 1 && cost[k][j] == 1))
+                    cost[i][j] = 1;
             }
         }
     }
@@ -50,6 +48,4 @@ void main()
         }
         printf("\n");
     }
-
-
 }
