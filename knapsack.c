@@ -1,73 +1,73 @@
+#include <conio.h>
 #include <stdio.h>
 
-int main() {
-    int n = 5;
-    int weight[n], prize[n];
-    float ratio[n];
-    int capacity = 4, tp = 0, ip;
-    float x[n];
+void main()
+{
+    int objects;
+    printf("enter the no of objects");
+    scanf("%d", &objects);
 
-    printf("Enter weights: ");
-    for (int i = 0; i < n; i++) {
+    int weight[objects], price[objects], capacity, totalprofit, checki;
+    float ratio[objects], complete[objects];
+
+    printf("enter the capacity");
+    scanf("%d", &capacity);
+
+    printf("enter the no of price");
+    for (int i = 0; i < objects; i++)
+        scanf("%d", &price[i]);
+
+    printf("enter the no of weight");
+    for (int i = 0; i < objects; i++)
         scanf("%d", &weight[i]);
-    }
 
-    printf("Enter prizes: ");
-    for (int i = 0; i < n; i++) {
-        scanf("%d", &prize[i]);
+    for (int i = 0; i < objects; i++)
+    {
+        ratio[i] = (float)price[i] / weight[i];
+        complete[i] = 0.0;
     }
-
-    for (int i = 0; i < n; i++) {
-        ratio[i] = ( weight[i] / prize[i]);  // Calculate the weight-to-prize ratio
-    }
-
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n - i - 1; j++) {
-            if (ratio[j] > ratio[j + 1]) {
-                // Swap ratio
+    for (int i = 0; i < objects; i++)
+    {
+        for (int j = 0; j < objects - i - 1; j++)
+        {
+            if (ratio[j] > ratio[j + 1])
+            {
                 float temp = ratio[j];
                 ratio[j] = ratio[j + 1];
                 ratio[j + 1] = temp;
 
-                // Swap weight
-                int tempw = weight[j];
-                weight[j] = weight[j + 1];
-                weight[j + 1] = tempw;
+                int tempo = price[j];
+                price[j] = price[j + 1];
+                price[j + 1] = tempo;
 
-                // Swap prize
-                int tempp = prize[j];
-                prize[j] = prize[j + 1];
-                prize[j + 1] = tempp;
+                int tempm = weight[j];
+                weight[j] = ratio[j + 1];
+                weight[j + 1] = tempm;
             }
         }
     }
 
-    for (int i = 0; i < n; i++) {
-        x[i] = 0.0;  // Initialize x array with zeros
-    }
-
-    for (ip = 0; ip < n; ip++) {
-        if (weight[ip] > capacity) {
+    for (checki = 0; checki < objects; checki++)
+    {
+        if (weight[checki] > capacity)
+        {
             break;
-        } else {
-            x[ip] = 1.0;
-            tp += prize[ip];
-            capacity -= weight[ip];
+        }
+        else
+        {
+            complete[checki] = 1.0;
+            totalprofit += price[checki];
+            capacity -= weight[checki];
         }
     }
 
-    if (ip < n) {
-        x[ip] = (float) capacity / weight[ip];
+    if (checki < objects)
+    {
+        complete[checki] = (float)capacity / weight[checki];
     }
+    totalprofit += complete[checki] * price[checki];
 
-    tp += x[ip] * prize[ip];
-
-    printf("Fractional knapsack solution:\n");
-    for (int i = 0; i < n; i++) {
-        printf("Item %d: %.2f\n", i + 1, x[i]);
+    for (int i = 0; i < objects; i++) {
+        printf("Item %d: %.2f\n", i + 1, complete[i]);
     }
-
-    printf("Total prize: %d\n", tp);
-
-    return 0;
 }
