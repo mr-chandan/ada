@@ -1,33 +1,29 @@
 #include <stdio.h>
-#include <conio.h>
 #include <string.h>
-
 void main()
 {
-    char text[10], pattern[10];
-    int textlen, patternlen, i, j;
-
-    printf("enter the text ");
+    char text[20], pat[20];
+    int textlen, patternlen,j;
+    printf("Enter the string : ");
     gets(text);
-
-    printf("enter the pattern to be found ");
-    gets(pattern);
+    printf("Enter the pattern to find : ");
+    gets(pat);
 
     textlen = strlen(text);
-    patternlen = strlen(pattern);
+    patternlen = strlen(pat);
 
-    for (i = 0; i <= textlen; i++)
+    for (int i = 0; i <= textlen - patternlen; i++)
     {
+
         for (j = 0; j < patternlen; j++)
         {
-            if (text[i + j] != pattern[j])
+            if (text[i + j] != pat[j])
             {
                 break;
             }
         }
+
         if (j == patternlen)
-        {
-            printf("pattern found at %d ", i);
-        }
+            printf("Pattern found at position %d \n", i + 1);
     }
 }
